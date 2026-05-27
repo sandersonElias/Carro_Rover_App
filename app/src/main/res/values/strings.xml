@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Rover Control</string>
+    <string name="connect_title">Conectar ao Rover</string>
+    <string name="nav_drive">Dirigir</string>
+    <string name="nav_arm">Braço</string>
+    <string name="action_connect">Conectar</string>
+    <string name="action_disconnect">Desconectar</string>
+</resources>

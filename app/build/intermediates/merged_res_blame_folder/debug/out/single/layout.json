@@ -1,0 +1,22 @@
+[
+    {
+        "merged": "com.rover.control.app-mergeDebugResources-46:/layout/fragment_arm.xml",
+        "source": "com.rover.control.app-main-49:/layout/fragment_arm.xml"
+    },
+    {
+        "merged": "com.rover.control.app-mergeDebugResources-46:/layout/fragment_drive.xml",
+        "source": "com.rover.control.app-main-49:/layout/fragment_drive.xml"
+    },
+    {
+        "merged": "com.rover.control.app-mergeDebugResources-46:/layout/activity_main.xml",
+        "source": "com.rover.control.app-main-49:/layout/activity_main.xml"
+    },
+    {
+        "merged": "com.rover.control.app-mergeDebugResources-46:/layout/activity_connect.xml",
+        "source": "com.rover.control.app-main-49:/layout/activity_connect.xml"
+    },
+    {
+        "merged": "com.rover.control.app-mergeDebugResources-46:/layout/item_device.xml",
+        "source": "com.rover.control.app-main-49:/layout/item_device.xml"
+    }
+]

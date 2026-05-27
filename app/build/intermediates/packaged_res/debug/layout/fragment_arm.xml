@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBackground">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- ═══ Sliders dos Servos ══════════════════════════════════════════ -->
+
+        <!-- A1 Base -->
+        <TextView android:id="@+id/tv_a1" style="@style/ServoLabel" android:text="Base: 90°" />
+        <SeekBar android:id="@+id/seek_a1" style="@style/ServoSeek" />
+
+        <!-- A2 Ombro -->
+        <TextView android:id="@+id/tv_a2" style="@style/ServoLabel" android:text="Ombro: 90°" />
+        <SeekBar android:id="@+id/seek_a2" style="@style/ServoSeek" />
+
+        <!-- A3 Cotovelo -->
+        <TextView android:id="@+id/tv_a3" style="@style/ServoLabel" android:text="Cotovelo: 90°" />
+        <SeekBar android:id="@+id/seek_a3" style="@style/ServoSeek" />
+
+        <!-- A4 Pulso Pitch -->
+        <TextView android:id="@+id/tv_a4" style="@style/ServoLabel" android:text="Pulso↕: 90°" />
+        <SeekBar android:id="@+id/seek_a4" style="@style/ServoSeek" />
+
+        <!-- A5 Pulso Roll -->
+        <TextView android:id="@+id/tv_a5" style="@style/ServoLabel" android:text="Pulso↻: 90°" />
+        <SeekBar android:id="@+id/seek_a5" style="@style/ServoSeek" />
+
+        <!-- A6 Garra -->
+        <TextView android:id="@+id/tv_a6" style="@style/ServoLabel" android:text="Garra: 90°" />
+        <SeekBar android:id="@+id/seek_a6" style="@style/ServoSeek" />
+
+        <!-- ═══ Botões de Controle Rápido ══════════════════════════════════ -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="12dp">
+
+            <Button android:id="@+id/btn_open_gripper"
+                style="@style/ArmButton"
+                android:layout_weight="1"
+                android:text="Garra Abrir" />
+
+            <Button android:id="@+id/btn_close_gripper"
+                style="@style/ArmButton"
+                android:layout_weight="1"
+                android:text="Garra Fechar" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="6dp">
+
+            <Button android:id="@+id/btn_home"
+                style="@style/ArmButton"
+                android:layout_weight="1"
+                android:text="🏠 Home" />
+
+            <Button android:id="@+id/btn_send_all"
+                style="@style/ArmButton"
+                android:layout_weight="1"
+                android:backgroundTint="@color/colorSecondary"
+                android:text="Enviar Todos" />
+
+        </LinearLayout>
+
+        <!-- Presets -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Posições Pré-definidas"
+            android:textColor="@color/colorOnBackground"
+            android:textSize="13sp"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="4dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button android:id="@+id/btn_preset1" style="@style/PresetButton" android:layout_weight="1" android:text="P1" />
+            <Button android:id="@+id/btn_preset2" style="@style/PresetButton" android:layout_weight="1" android:text="P2" />
+            <Button android:id="@+id/btn_preset3" style="@style/PresetButton" android:layout_weight="1" android:text="P3" />
+            <Button android:id="@+id/btn_preset4" style="@style/PresetButton" android:layout_weight="1" android:text="P4" />
+
+        </LinearLayout>
+
+        <!-- ═══ Gravação de Movimentos ══════════════════════════════════════ -->
+        <com.google.android.material.divider.MaterialDivider
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginVertical="12dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Gravação de Sequência"
+            android:textColor="@color/colorOnBackground"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="8dp" />
+
+        <!-- Delay entre frames -->
+        <TextView android:id="@+id/tv_delay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Delay: 500ms"
+            android:textColor="@color/colorOnBackground"
+            android:textSize="13sp" />
+        <SeekBar android:id="@+id/seek_delay"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:progressTint="@color/colorPrimary"
+            android:thumbTint="@color/colorPrimary" />
+
+        <!-- Número de repetições -->
+        <TextView android:id="@+id/tv_repeat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Repetições: 1"
+            android:textColor="@color/colorOnBackground"
+            android:textSize="13sp" />
+        <SeekBar android:id="@+id/seek_repeat"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            android:progressTint="@color/colorPrimary"
+            android:thumbTint="@color/colorPrimary" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button android:id="@+id/btn_record"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                android:layout_margin="4dp"
+                android:text="⏺ Gravar"
+                android:backgroundTint="@color/colorPrimary"
+                android:textColor="@android:color/white" />
+
+            <Button android:id="@+id/btn_play"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                android:layout_margin="4dp"
+                android:text="▶ Reproduzir"
+                android:backgroundTint="@color/colorSecondary"
+                android:textColor="@android:color/white" />
+
+            <Button android:id="@+id/btn_clear_rec"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                android:layout_margin="4dp"
+                android:text="🗑 Limpar"
+                android:backgroundTint="@color/colorError"
+                android:textColor="@android:color/white" />
+
+        </LinearLayout>
+
+        <Space android:layout_width="match_parent" android:layout_height="24dp" />
+
+    </LinearLayout>
+</ScrollView>

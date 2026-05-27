@@ -1,0 +1,82 @@
+[
+    {
+        "merged": "com.rover.control.app-merged_res-47:/drawable_ic_bt_disconnected.xml.flat",
+        "source": "com.rover.control.app-main-49:/drawable/ic_bt_disconnected.xml"
+    },
+    {
+        "merged": "com.rover.control.app-merged_res-47:/mipmap-anydpi-v26_ic_launcher_round.xml.flat",
+        "source": "com.rover.control.app-main-49:/mipmap-anydpi-v26/ic_launcher_round.xml"
+    },
+    {
+        "merged": "com.rover.control.app-merged_res-47:/layout_activity_main.xml.flat",
+        "source": "com.rover.control.app-main-49:/layout/activity_main.xml"
+    },
+    {
+        "merged": "com.rover.control.app-merged_res-47:/drawable_ic_bt_connecting.xml.flat",
+        "source": "com.rover.control.app-main-49:/drawable/ic_bt_connecting.xml"
+    },
+    {
+        "merged": "com.rover.control.app-merged_res-47:/layout_fragment_drive.xml.flat",
+        "source": "com.rover.control.app-main-49:/layout/fragment_drive.xml"
+    },
+    {
+        "merged": "com.rover.control.app-merged_res-47:/mipmap-anydpi-v26_ic_launcher.xml.flat",
+        "source": "com.rover.control.app-main-49:/mipmap-anydpi-v26/ic_launcher.xml"
+    },
+    {
+        "merged": "com.rover.control.app-merged_res-47:/color_nav_item_color.xml.flat",
+        "source": "com.rover.control.app-main-49:/color/nav_item_color.xml"
+    },
+    {
+        "merged": "com.rover.control.app-merged_res-47:/mipmap-anydpi_ic_launcher.xml.flat",
+        "source": "com.rover.control.app-main-49:/mipmap-anydpi/ic_launcher.xml"
+    },
+    {
+        "merged": "com.rover.control.app-merged_res-47:/navigation_nav_graph.xml.flat",
+        "source": "com.rover.control.app-main-49:/navigation/nav_graph.xml"
+    },
+    {
+        "merged": "com.rover.control.app-merged_res-47:/drawable_ic_launcher_background.xml.flat",
+        "source": "com.rover.control.app-main-49:/drawable/ic_launcher_background.xml"
+    },
+    {
+        "merged": "com.rover.control.app-merged_res-47:/drawable_ic_launcher_foreground.xml.flat",
+        "source": "com.rover.control.app-main-49:/drawable/ic_launcher_foreground.xml"
+    },
+    {
+        "merged": "com.rover.control.app-merged_res-47:/menu_menu_bottom_nav.xml.flat",
+        "source": "com.rover.control.app-main-49:/menu/menu_bottom_nav.xml"
+    },
+    {
+        "merged": "com.rover.control.app-merged_res-47:/layout_activity_connect.xml.flat",
+        "source": "com.rover.control.app-main-49:/layout/activity_connect.xml"
+    },
+    {
+        "merged": "com.rover.control.app-merged_res-47:/layout_item_device.xml.flat",
+        "source": "com.rover.control.app-main-49:/layout/item_device.xml"
+    },
+    {
+        "merged": "com.rover.control.app-merged_res-47:/layout_fragment_arm.xml.flat",
+        "source": "com.rover.control.app-main-49:/layout/fragment_arm.xml"
+    },
+    {
+        "merged": "com.rover.control.app-merged_res-47:/drawable_ic_gamepad.xml.flat",
+        "source": "com.rover.control.app-main-49:/drawable/ic_gamepad.xml"
+    },
+    {
+        "merged": "com.rover.control.app-merged_res-47:/menu_menu_main.xml.flat",
+        "source": "com.rover.control.app-main-49:/menu/menu_main.xml"
+    },
+    {
+        "merged": "com.rover.control.app-merged_res-47:/mipmap-anydpi_ic_launcher_round.xml.flat",
+        "source": "com.rover.control.app-main-49:/mipmap-anydpi/ic_launcher_round.xml"
+    },
+    {
+        "merged": "com.rover.control.app-merged_res-47:/drawable_ic_arm.xml.flat",
+        "source": "com.rover.control.app-main-49:/drawable/ic_arm.xml"
+    },
+    {
+        "merged": "com.rover.control.app-merged_res-47:/drawable_ic_bt_connected.xml.flat",
+        "source": "com.rover.control.app-main-49:/drawable/ic_bt_connected.xml"
+    }
+]

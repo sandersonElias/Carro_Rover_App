@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#00C853</color>
+    <color name="colorSecondary">#0091EA</color>
+    <color name="colorBackground">#121212</color>
+    <color name="colorSurface">#1E1E1E</color>
+    <color name="colorOnBackground">#EFEFEF</color>
+    <color name="colorError">#D32F2F</color>
+    <color name="colorBtConnected">#00C853</color>
+    <color name="colorBtDisconnected">#757575</color>
+</resources>
