@@ -27,7 +27,7 @@
         <activity
             android:name=".MainActivity"
             android:exported="true"
-            android:screenOrientation="portrait">
+            android:screenOrientation="landscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -37,7 +37,14 @@
         <activity
             android:name=".ui.connect.ConnectActivity"
             android:exported="false"
+            android:screenOrientation="landscape"
             android:label="@string/connect_title" />
+
+        <activity
+            android:name=".ui.excavator.ExcavatorActivity"
+            android:exported="false"
+            android:screenOrientation="landscape"
+            android:label="Modo Escavadeira" />
 
     </application>
 

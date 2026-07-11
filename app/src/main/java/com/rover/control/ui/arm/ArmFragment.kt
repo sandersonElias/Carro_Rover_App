@@ -1,13 +1,22 @@
 package com.rover.control.ui.arm
 
+import android.animation.ObjectAnimator
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AccelerateDecelerateInterpolator
 import android.widget.SeekBar
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.lifecycleScope
 import com.rover.control.bluetooth.BluetoothService
 import com.rover.control.databinding.FragmentArmBinding
+import com.rover.control.ui.connect.ConnectActivity
+import com.rover.control.ui.excavator.ExcavatorActivity
+import kotlinx.coroutines.launch
 
 /**
  * Tela de controle do braço robótico.
@@ -19,15 +28,15 @@ class ArmFragment : Fragment() {
 
     private var _binding: FragmentArmBinding? = null
     private val binding get() = _binding!!
+    private val vm: ArmViewModel by activityViewModels()
 
-    // Posição atual de cada servo (índice 0–5)
-    private val positions = IntArray(6) { 90 }
+    private var recordingPulseAnimator: ObjectAnimator? = null
 
     // Listeners individuais para cada slider
     private val seekListeners = Array(6) { index ->
         object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(sb: SeekBar, progress: Int, fromUser: Boolean) {
-                positions[index] = progress
+                vm.positions[index] = progress
                 updateAngleLabel(index, progress)
                 if (fromUser) BluetoothService.setServo(index + 1, progress)
             }
@@ -46,9 +55,41 @@ class ArmFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        restoreState()
         setupSliders()
         setupButtons()
         setupRecording()
+        setupConnectionOverlay()
+        observeBluetoothState()
+    }
+
+    // ── Connection Overlay ──────────────────────────────────────────────────
+    private fun setupConnectionOverlay() {
+        binding.btnConnectOverlay.setOnClickListener {
+            startActivity(Intent(requireContext(), ConnectActivity::class.java))
+        }
+    }
+
+    private fun observeBluetoothState() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            BluetoothService.state.collect { state ->
+                val isConnected = state == BluetoothService.State.CONNECTED
+                binding.overlayConnection.isVisible = !isConnected
+                binding.contentScroll.alpha = if (isConnected) 1f else 0.3f
+            }
+        }
+    }
+
+    private fun restoreState() {
+        // Restore slider positions from ViewModel
+        val seekBars = listOf(
+            binding.seekA1, binding.seekA2, binding.seekA3,
+            binding.seekA4, binding.seekA5, binding.seekA6
+        )
+        seekBars.forEachIndexed { i, sb ->
+            sb.progress = vm.positions[i]
+            updateAngleLabel(i, vm.positions[i])
+        }
     }
 
     // ── Sliders A1–A6 ─────────────────────────────────────────────────────────
@@ -96,22 +137,25 @@ class ArmFragment : Fragment() {
         binding.btnPreset4.setOnClickListener { BluetoothService.sendButton("e") }
 
         binding.btnSendAll.setOnClickListener {
-            BluetoothService.setAllServos(positions)
+            BluetoothService.setAllServos(vm.positions)
+        }
+
+        binding.btnExcavatorMode.setOnClickListener {
+            startActivity(Intent(requireContext(), ExcavatorActivity::class.java))
         }
     }
 
     // ── Gravação e Playback ───────────────────────────────────────────────────
-    private var isRecording = false
-    private var isPlaying   = false
 
     private fun setupRecording() {
         binding.seekDelay.max = 4900          // 100–5000 ms
-        binding.seekDelay.progress = 400      // default 500 ms
-        updateDelayLabel(500)
+        binding.seekDelay.progress = vm.delayMs - 100
+        updateDelayLabel(vm.delayMs)
 
         binding.seekDelay.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(sb: SeekBar, progress: Int, fromUser: Boolean) {
                 val ms = progress + 100
+                vm.delayMs = ms
                 updateDelayLabel(ms)
                 if (fromUser) BluetoothService.setDelay(ms)
             }
@@ -120,12 +164,13 @@ class ArmFragment : Fragment() {
         })
 
         binding.seekRepeat.max = 9
-        binding.seekRepeat.progress = 0
-        updateRepeatLabel(1)
+        binding.seekRepeat.progress = vm.repeatCount - 1
+        updateRepeatLabel(vm.repeatCount)
 
         binding.seekRepeat.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(sb: SeekBar, progress: Int, fromUser: Boolean) {
                 val rep = progress + 1
+                vm.repeatCount = rep
                 updateRepeatLabel(rep)
                 if (fromUser) BluetoothService.setRepeat(rep)
             }
@@ -133,37 +178,54 @@ class ArmFragment : Fragment() {
             override fun onStopTrackingTouch(sb: SeekBar) {}
         })
 
+        updateRecordButtonState()
+        updatePlayButtonState()
+
         binding.btnRecord.setOnClickListener {
-            isRecording = !isRecording
-            if (isRecording) {
+            vm.isRecording = !vm.isRecording
+            updateRecordButtonState()
+            if (vm.isRecording) {
                 BluetoothService.recStart()
-                binding.btnRecord.text = "⏹ Parar Gravação"
-                binding.btnRecord.setBackgroundColor(android.graphics.Color.parseColor("#D32F2F"))
+                startRecordingPulse()
             } else {
                 BluetoothService.recStop()
-                binding.btnRecord.text = "⏺ Gravar"
-                binding.btnRecord.setBackgroundColor(android.graphics.Color.parseColor("#00C853"))
+                stopRecordingPulse()
             }
         }
 
         binding.btnPlay.setOnClickListener {
-            isPlaying = !isPlaying
-            if (isPlaying) {
+            vm.isPlaying = !vm.isPlaying
+            updatePlayButtonState()
+            if (vm.isPlaying) {
                 BluetoothService.recPlay()
-                binding.btnPlay.text = "⏸ Pausar"
             } else {
                 BluetoothService.recPause()
-                binding.btnPlay.text = "▶ Reproduzir"
             }
         }
 
         binding.btnClearRec.setOnClickListener {
             BluetoothService.recClear()
-            isRecording = false
-            isPlaying   = false
-            binding.btnRecord.text = "⏺ Gravar"
-            binding.btnPlay.text   = "▶ Reproduzir"
+            vm.isRecording = false
+            vm.isPlaying   = false
+            updateRecordButtonState()
+            updatePlayButtonState()
+            stopRecordingPulse()
         }
+    }
+
+    private fun updateRecordButtonState() {
+        if (vm.isRecording) {
+            binding.btnRecord.text = "⏹ Parar"
+            binding.tvRecordingStatus.text = "● Gravando..."
+            binding.tvRecordingStatus.visibility = View.VISIBLE
+        } else {
+            binding.btnRecord.text = "⏺ Gravar"
+            binding.tvRecordingStatus.visibility = View.GONE
+        }
+    }
+
+    private fun updatePlayButtonState() {
+        binding.btnPlay.text = if (vm.isPlaying) "⏸ Pausar" else "▶ Reproduzir"
     }
 
     private fun updateDelayLabel(ms: Int) {
@@ -180,11 +242,33 @@ class ArmFragment : Fragment() {
             binding.seekA4, binding.seekA5, binding.seekA6
         )
         seekBars.forEach { it.progress = 90 }
-        for (i in 0..5) { positions[i] = 90; updateAngleLabel(i, 90) }
+        for (i in 0..5) { vm.positions[i] = 90; updateAngleLabel(i, 90) }
+    }
+
+    // ── Recording Pulse Animation ─────────────────────────────────────────────
+    private fun startRecordingPulse() {
+        recordingPulseAnimator = ObjectAnimator.ofFloat(
+            binding.tvRecordingStatus,
+            "alpha",
+            1f, 0.3f
+        ).apply {
+            duration = 800
+            repeatMode = ObjectAnimator.REVERSE
+            repeatCount = ObjectAnimator.INFINITE
+            interpolator = AccelerateDecelerateInterpolator()
+            start()
+        }
+    }
+
+    private fun stopRecordingPulse() {
+        recordingPulseAnimator?.cancel()
+        recordingPulseAnimator = null
+        binding.tvRecordingStatus.alpha = 1f
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
+        stopRecordingPulse()
         _binding = null
     }
 }

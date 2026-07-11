@@ -7,7 +7,8 @@
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@color/colorSurface">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
@@ -15,16 +16,28 @@
             android:layout_height="?attr/actionBarSize"
             android:background="@color/colorSurface"
             app:title="@string/app_name"
-            app:titleTextColor="@color/colorPrimary">
+            app:titleTextColor="@color/colorOnBackground">
 
-            <ImageView
-                android:id="@+id/statusIndicator"
-                android:layout_width="28dp"
-                android:layout_height="28dp"
+            <!-- Status Chip -->
+            <TextView
+                android:id="@+id/tv_status_chip"
+                style="@style/ToolbarStatus"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="12dp"
+                android:text="Desconectado"
+                android:textColor="@color/colorBtDisconnected" />
+
+            <!-- Connect Button (visible icon) -->
+            <ImageButton
+                android:id="@+id/btn_connect"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:layout_gravity="end"
-                android:layout_marginEnd="16dp"
-                android:src="@drawable/ic_bt_disconnected"
-                android:contentDescription="Status Bluetooth" />
+                android:layout_marginEnd="8dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:src="@drawable/ic_bt_connect"
+                android:contentDescription="Conectar Bluetooth"
+                app:tint="@color/colorOnBackground" />
 
         </androidx.appcompat.widget.Toolbar>
 
@@ -48,6 +61,7 @@
         android:background="@color/colorSurface"
         app:menu="@menu/menu_bottom_nav"
         app:itemIconTint="@color/nav_item_color"
-        app:itemTextColor="@color/nav_item_color" />
+        app:itemTextColor="@color/nav_item_color"
+        app:elevation="8dp" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

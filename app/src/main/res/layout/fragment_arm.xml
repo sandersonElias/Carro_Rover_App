@@ -1,180 +1,359 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
+<FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorBackground">
 
-    <LinearLayout
+    <!-- Main Content -->
+    <ScrollView
+        android:id="@+id/content_scroll"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="16dp">
-
-        <!-- ═══ Sliders dos Servos ══════════════════════════════════════════ -->
-
-        <!-- A1 Base -->
-        <TextView android:id="@+id/tv_a1" style="@style/ServoLabel" android:text="Base: 90°" />
-        <SeekBar android:id="@+id/seek_a1" style="@style/ServoSeek" />
-
-        <!-- A2 Ombro -->
-        <TextView android:id="@+id/tv_a2" style="@style/ServoLabel" android:text="Ombro: 90°" />
-        <SeekBar android:id="@+id/seek_a2" style="@style/ServoSeek" />
-
-        <!-- A3 Cotovelo -->
-        <TextView android:id="@+id/tv_a3" style="@style/ServoLabel" android:text="Cotovelo: 90°" />
-        <SeekBar android:id="@+id/seek_a3" style="@style/ServoSeek" />
-
-        <!-- A4 Pulso Pitch -->
-        <TextView android:id="@+id/tv_a4" style="@style/ServoLabel" android:text="Pulso↕: 90°" />
-        <SeekBar android:id="@+id/seek_a4" style="@style/ServoSeek" />
-
-        <!-- A5 Pulso Roll -->
-        <TextView android:id="@+id/tv_a5" style="@style/ServoLabel" android:text="Pulso↻: 90°" />
-        <SeekBar android:id="@+id/seek_a5" style="@style/ServoSeek" />
-
-        <!-- A6 Garra -->
-        <TextView android:id="@+id/tv_a6" style="@style/ServoLabel" android:text="Garra: 90°" />
-        <SeekBar android:id="@+id/seek_a6" style="@style/ServoSeek" />
-
-        <!-- ═══ Botões de Controle Rápido ══════════════════════════════════ -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="12dp">
-
-            <Button android:id="@+id/btn_open_gripper"
-                style="@style/ArmButton"
-                android:layout_weight="1"
-                android:text="Garra Abrir" />
-
-            <Button android:id="@+id/btn_close_gripper"
-                style="@style/ArmButton"
-                android:layout_weight="1"
-                android:text="Garra Fechar" />
-
-        </LinearLayout>
+        android:layout_height="match_parent"
+        android:fillViewport="true">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="6dp">
+            android:orientation="vertical"
+            android:padding="12dp">
 
-            <Button android:id="@+id/btn_home"
-                style="@style/ArmButton"
-                android:layout_weight="1"
-                android:text="🏠 Home" />
+            <!-- Two Column Layout for Sliders -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
-            <Button android:id="@+id/btn_send_all"
-                style="@style/ArmButton"
-                android:layout_weight="1"
-                android:backgroundTint="@color/colorSecondary"
-                android:text="Enviar Todos" />
+                <!-- Left Column: Servos 1-3 -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:layout_marginEnd="6dp">
+
+                    <!-- A1 Base -->
+                    <com.google.android.material.card.MaterialCardView
+                        style="@style/ControlCard"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp">
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+                            <TextView android:id="@+id/tv_a1" style="@style/ServoLabel" android:text="Base: 90°" />
+                            <SeekBar android:id="@+id/seek_a1" style="@style/ServoSeek" />
+                        </LinearLayout>
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <!-- A2 Ombro -->
+                    <com.google.android.material.card.MaterialCardView
+                        style="@style/ControlCard"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp">
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+                            <TextView android:id="@+id/tv_a2" style="@style/ServoLabel" android:text="Ombro: 90°" />
+                            <SeekBar android:id="@+id/seek_a2" style="@style/ServoSeek" />
+                        </LinearLayout>
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <!-- A3 Cotovelo -->
+                    <com.google.android.material.card.MaterialCardView
+                        style="@style/ControlCard"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp">
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+                            <TextView android:id="@+id/tv_a3" style="@style/ServoLabel" android:text="Cotovelo: 90°" />
+                            <SeekBar android:id="@+id/seek_a3" style="@style/ServoSeek" />
+                        </LinearLayout>
+                    </com.google.android.material.card.MaterialCardView>
+
+                </LinearLayout>
+
+                <!-- Right Column: Servos 4-6 -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:layout_marginStart="6dp">
+
+                    <!-- A4 Pulso Pitch -->
+                    <com.google.android.material.card.MaterialCardView
+                        style="@style/ControlCard"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp">
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+                            <TextView android:id="@+id/tv_a4" style="@style/ServoLabel" android:text="Pulso↕: 90°" />
+                            <SeekBar android:id="@+id/seek_a4" style="@style/ServoSeek" />
+                        </LinearLayout>
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <!-- A5 Pulso Roll -->
+                    <com.google.android.material.card.MaterialCardView
+                        style="@style/ControlCard"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp">
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+                            <TextView android:id="@+id/tv_a5" style="@style/ServoLabel" android:text="Pulso↻: 90°" />
+                            <SeekBar android:id="@+id/seek_a5" style="@style/ServoSeek" />
+                        </LinearLayout>
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <!-- A6 Garra -->
+                    <com.google.android.material.card.MaterialCardView
+                        style="@style/ControlCard"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp">
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+                            <TextView android:id="@+id/tv_a6" style="@style/ServoLabel" android:text="Garra: 90°" />
+                            <SeekBar android:id="@+id/seek_a6" style="@style/ServoSeek" />
+                        </LinearLayout>
+                    </com.google.android.material.card.MaterialCardView>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <!-- Control Buttons -->
+            <com.google.android.material.card.MaterialCardView
+                style="@style/ControlCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Controles"
+                        android:textColor="@color/colorOnSurfaceVariant"
+                        android:textSize="12sp"
+                        android:layout_marginBottom="8dp" />
+
+                    <!-- Row 1: Gripper + Home -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <Button android:id="@+id/btn_open_gripper"
+                            style="@style/ArmButton"
+                            android:layout_weight="1"
+                            android:text="Garra Abrir" />
+
+                        <Button android:id="@+id/btn_close_gripper"
+                            style="@style/ArmButton"
+                            android:layout_weight="1"
+                            android:text="Garra Fechar" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="4dp">
+
+                        <Button android:id="@+id/btn_home"
+                            style="@style/ArmButton"
+                            android:layout_weight="1"
+                            android:text="Home" />
+
+                        <Button android:id="@+id/btn_send_all"
+                            style="@style/SecondaryButton"
+                            android:text="Enviar Todos" />
+
+                    </LinearLayout>
+
+                    <!-- Row 2: Presets -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="8dp">
+
+                        <Button android:id="@+id/btn_preset1" style="@style/PresetButton" android:layout_weight="1" android:text="P1" />
+                        <Button android:id="@+id/btn_preset2" style="@style/PresetButton" android:layout_weight="1" android:text="P2" />
+                        <Button android:id="@+id/btn_preset3" style="@style/PresetButton" android:layout_weight="1" android:text="P3" />
+                        <Button android:id="@+id/btn_preset4" style="@style/PresetButton" android:layout_weight="1" android:text="P4" />
+
+                    </LinearLayout>
+
+                    <!-- Excavator Mode Button -->
+                    <Button
+                        android:id="@+id/btn_excavator_mode"
+                        style="@style/SecondaryButton"
+                        android:layout_width="match_parent"
+                        android:layout_marginTop="8dp"
+                        android:text="Modo Escavadeira" />
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Recording Section -->
+            <com.google.android.material.card.MaterialCardView
+                style="@style/ControlCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Gravação de Sequência"
+                        android:textColor="@color/colorOnBackground"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        android:layout_marginBottom="8dp" />
+
+                    <!-- Recording Indicator -->
+                    <TextView
+                        android:id="@+id/tv_recording_status"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:textColor="@color/colorError"
+                        android:textSize="12sp"
+                        android:textStyle="bold"
+                        android:layout_marginBottom="8dp"
+                        android:visibility="gone" />
+
+                    <!-- Delay -->
+                    <TextView android:id="@+id/tv_delay"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Delay: 500ms"
+                        android:textColor="@color/colorOnSurfaceVariant"
+                        android:textSize="13sp" />
+                    <SeekBar android:id="@+id/seek_delay"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:progressTint="@color/colorPrimary"
+                        android:thumbTint="@color/colorPrimary" />
+
+                    <!-- Repeat -->
+                    <TextView android:id="@+id/tv_repeat"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Repetições: 1"
+                        android:textColor="@color/colorOnSurfaceVariant"
+                        android:textSize="13sp" />
+                    <SeekBar android:id="@+id/seek_repeat"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="12dp"
+                        android:progressTint="@color/colorPrimary"
+                        android:thumbTint="@color/colorPrimary" />
+
+                    <!-- Recording Buttons -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <Button android:id="@+id/btn_record"
+                            style="@style/PrimaryButton"
+                            android:text="⏺ Gravar" />
+
+                        <Button android:id="@+id/btn_play"
+                            style="@style/SecondaryButton"
+                            android:text="▶ Reproduzir" />
+
+                        <Button android:id="@+id/btn_clear_rec"
+                            style="@style/DangerButton"
+                            android:text="Limpar" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
 
         </LinearLayout>
 
-        <!-- Presets -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Posições Pré-definidas"
-            android:textColor="@color/colorOnBackground"
-            android:textSize="13sp"
-            android:layout_marginTop="12dp"
-            android:layout_marginBottom="4dp" />
+    </ScrollView>
+
+    <!-- Connection Overlay -->
+    <FrameLayout
+        android:id="@+id/overlay_connection"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorOverlay"
+        android:visibility="gone">
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_gravity="center"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:padding="32dp">
 
-            <Button android:id="@+id/btn_preset1" style="@style/PresetButton" android:layout_weight="1" android:text="P1" />
-            <Button android:id="@+id/btn_preset2" style="@style/PresetButton" android:layout_weight="1" android:text="P2" />
-            <Button android:id="@+id/btn_preset3" style="@style/PresetButton" android:layout_weight="1" android:text="P3" />
-            <Button android:id="@+id/btn_preset4" style="@style/PresetButton" android:layout_weight="1" android:text="P4" />
+            <ImageView
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:src="@drawable/ic_bt_disconnected"
+                android:layout_marginBottom="16dp"
+                android:alpha="0.7" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Desconectado"
+                android:textColor="@color/colorOnBackground"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="8dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Conecte-se ao Rover para controlar o braço"
+                android:textColor="@color/colorOnSurfaceVariant"
+                android:textSize="14sp"
+                android:layout_marginBottom="24dp" />
+
+            <Button
+                android:id="@+id/btn_connect_overlay"
+                style="@style/PrimaryButton"
+                android:layout_width="200dp"
+                android:text="Conectar" />
 
         </LinearLayout>
 
-        <!-- ═══ Gravação de Movimentos ══════════════════════════════════════ -->
-        <com.google.android.material.divider.MaterialDivider
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginVertical="12dp" />
+    </FrameLayout>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Gravação de Sequência"
-            android:textColor="@color/colorOnBackground"
-            android:textSize="15sp"
-            android:textStyle="bold"
-            android:layout_marginBottom="8dp" />
-
-        <!-- Delay entre frames -->
-        <TextView android:id="@+id/tv_delay"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Delay: 500ms"
-            android:textColor="@color/colorOnBackground"
-            android:textSize="13sp" />
-        <SeekBar android:id="@+id/seek_delay"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:progressTint="@color/colorPrimary"
-            android:thumbTint="@color/colorPrimary" />
-
-        <!-- Número de repetições -->
-        <TextView android:id="@+id/tv_repeat"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Repetições: 1"
-            android:textColor="@color/colorOnBackground"
-            android:textSize="13sp" />
-        <SeekBar android:id="@+id/seek_repeat"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="12dp"
-            android:progressTint="@color/colorPrimary"
-            android:thumbTint="@color/colorPrimary" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <Button android:id="@+id/btn_record"
-                android:layout_width="0dp"
-                android:layout_height="48dp"
-                android:layout_weight="1"
-                android:layout_margin="4dp"
-                android:text="⏺ Gravar"
-                android:backgroundTint="@color/colorPrimary"
-                android:textColor="@android:color/white" />
-
-            <Button android:id="@+id/btn_play"
-                android:layout_width="0dp"
-                android:layout_height="48dp"
-                android:layout_weight="1"
-                android:layout_margin="4dp"
-                android:text="▶ Reproduzir"
-                android:backgroundTint="@color/colorSecondary"
-                android:textColor="@android:color/white" />
-
-            <Button android:id="@+id/btn_clear_rec"
-                android:layout_width="0dp"
-                android:layout_height="48dp"
-                android:layout_weight="1"
-                android:layout_margin="4dp"
-                android:text="🗑 Limpar"
-                android:backgroundTint="@color/colorError"
-                android:textColor="@android:color/white" />
-
-        </LinearLayout>
-
-        <Space android:layout_width="match_parent" android:layout_height="24dp" />
-
-    </LinearLayout>
-</ScrollView>
+</FrameLayout>

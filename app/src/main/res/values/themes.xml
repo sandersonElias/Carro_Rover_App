@@ -3,19 +3,32 @@
 
     <style name="Theme.RoverControl" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryVariant">@color/colorPrimaryVariant</item>
+        <item name="colorOnPrimary">@color/colorOnPrimary</item>
         <item name="colorSecondary">@color/colorSecondary</item>
+        <item name="colorSecondaryVariant">@color/colorSecondaryVariant</item>
+        <item name="colorOnSecondary">@color/colorOnSecondary</item>
+        <item name="android:colorBackground">@color/colorBackground</item>
         <item name="android:windowBackground">@color/colorBackground</item>
+        <item name="colorSurface">@color/colorSurface</item>
+        <item name="colorOnSurface">@color/colorOnSurface</item>
         <item name="colorError">@color/colorError</item>
+        <item name="colorOnError">@color/colorOnError</item>
+        <item name="colorSurfaceVariant">@color/colorSurfaceVariant</item>
+        <item name="colorOnSurfaceVariant">@color/colorOnSurfaceVariant</item>
     </style>
 
+    <!-- Servo Slider Label -->
     <style name="ServoLabel">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textColor">@color/colorOnBackground</item>
-        <item name="android:textSize">13sp</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">bold</item>
         <item name="android:layout_marginTop">10dp</item>
     </style>
 
+    <!-- Servo SeekBar -->
     <style name="ServoSeek">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
@@ -24,31 +37,117 @@
         <item name="android:layout_marginBottom">2dp</item>
     </style>
 
-    <style name="DpadButton">
+    <!-- D-Pad Button -->
+    <style name="DpadButton" parent="Widget.MaterialComponents.Button.OutlinedButton">
         <item name="android:layout_width">60dp</item>
         <item name="android:layout_height">60dp</item>
-        <item name="android:backgroundTint">@color/colorSurface</item>
+        <item name="android:backgroundTint">@color/colorSurfaceVariant</item>
         <item name="android:textColor">@color/colorPrimary</item>
         <item name="android:textSize">20sp</item>
         <item name="android:layout_margin">2dp</item>
+        <item name="cornerRadius">12dp</item>
+        <item name="strokeColor">@color/colorSurfaceVariant</item>
+        <item name="strokeWidth">1dp</item>
     </style>
 
-    <style name="ArmButton">
+    <!-- Arm Control Button -->
+    <style name="ArmButton" parent="Widget.MaterialComponents.Button.OutlinedButton">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">44dp</item>
         <item name="android:layout_margin">4dp</item>
-        <item name="android:backgroundTint">@color/colorSurface</item>
         <item name="android:textColor">@color/colorPrimary</item>
         <item name="android:textSize">13sp</item>
+        <item name="cornerRadius">8dp</item>
+        <item name="strokeColor">@color/colorSurfaceVariant</item>
+        <item name="strokeWidth">1dp</item>
     </style>
 
-    <style name="PresetButton">
+    <!-- Preset Button -->
+    <style name="PresetButton" parent="Widget.MaterialComponents.Button.OutlinedButton">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">44dp</item>
         <item name="android:layout_margin">4dp</item>
-        <item name="android:backgroundTint">@color/colorSurface</item>
         <item name="android:textColor">@color/colorSecondary</item>
         <item name="android:textStyle">bold</item>
+        <item name="cornerRadius">8dp</item>
+        <item name="strokeColor">@color/colorSecondary</item>
+        <item name="strokeWidth">1dp</item>
+    </style>
+
+    <!-- Primary Action Button (filled) -->
+    <style name="PrimaryButton" parent="Widget.MaterialComponents.Button">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">48dp</item>
+        <item name="android:layout_margin">4dp</item>
+        <item name="backgroundTint">@color/colorPrimary</item>
+        <item name="android:textColor">@color/colorOnPrimary</item>
+        <item name="cornerRadius">24dp</item>
+    </style>
+
+    <!-- Secondary Action Button (filled) -->
+    <style name="SecondaryButton" parent="Widget.MaterialComponents.Button">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">48dp</item>
+        <item name="android:layout_margin">4dp</item>
+        <item name="backgroundTint">@color/colorSecondary</item>
+        <item name="android:textColor">@color/colorOnSecondary</item>
+        <item name="cornerRadius">24dp</item>
+    </style>
+
+    <!-- Danger Button (filled red) -->
+    <style name="DangerButton" parent="Widget.MaterialComponents.Button">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">48dp</item>
+        <item name="android:layout_margin">4dp</item>
+        <item name="backgroundTint">@color/colorError</item>
+        <item name="android:textColor">@color/colorOnError</item>
+        <item name="cornerRadius">24dp</item>
+    </style>
+
+    <!-- Emergency Stop Button -->
+    <style name="EmergencyStopButton" parent="Widget.MaterialComponents.Button">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">64dp</item>
+        <item name="android:layout_marginTop">12dp</item>
+        <item name="backgroundTint">@color/colorError</item>
+        <item name="android:textColor">@color/colorOnError</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="cornerRadius">12dp</item>
+    </style>
+
+    <!-- Card Style -->
+    <style name="ControlCard" parent="Widget.MaterialComponents.CardView">
+        <item name="cardBackgroundColor">@color/colorSurface</item>
+        <item name="cardCornerRadius">12dp</item>
+        <item name="cardElevation">2dp</item>
+        <item name="contentPadding">12dp</item>
+        <item name="strokeColor">@color/colorSurfaceVariant</item>
+        <item name="strokeWidth">1dp</item>
+    </style>
+
+    <!-- Status Chip -->
+    <style name="StatusChip">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">28dp</item>
+        <item name="android:paddingHorizontal">12dp</item>
+        <item name="android:paddingVertical">4dp</item>
+        <item name="android:textSize">11sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textAllCaps">false</item>
+    </style>
+
+    <!-- Toolbar Status Indicator -->
+    <style name="ToolbarStatus">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">32dp</item>
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:layout_marginStart">12dp</item>
+        <item name="android:paddingHorizontal">12dp</item>
+        <item name="android:paddingVertical">4dp</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:background">@drawable/bg_status_chip</item>
     </style>
 
 </resources>

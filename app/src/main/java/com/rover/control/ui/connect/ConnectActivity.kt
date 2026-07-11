@@ -8,11 +8,14 @@ import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.view.View
+import android.view.animation.AnimationUtils
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
+import com.rover.control.R
 import com.rover.control.bluetooth.BluetoothService
 import com.rover.control.databinding.ActivityConnectBinding
 import kotlinx.coroutines.launch
@@ -51,6 +54,7 @@ class ConnectActivity : AppCompatActivity() {
         binding.recyclerDevices.adapter = adapter
 
         binding.btnRefresh.setOnClickListener { requestPermissionsAndLoad() }
+        binding.btnRefreshEmpty.setOnClickListener { requestPermissionsAndLoad() }
 
         observeConnectionState()
         requestPermissionsAndLoad()
@@ -69,13 +73,38 @@ class ConnectActivity : AppCompatActivity() {
     }
 
     private fun loadPairedDevices() {
+        showLoading()
+
         val paired: Set<BluetoothDevice> = btAdapter?.bondedDevices ?: emptySet()
         adapter.submitList(paired.toList())
-        binding.tvEmpty.visibility = if (paired.isEmpty()) View.VISIBLE else View.GONE
+
+        if (paired.isEmpty()) {
+            showEmptyState()
+        } else {
+            showDeviceList()
+        }
+    }
+
+    private fun showLoading() {
+        binding.loadingState.isVisible = true
+        binding.emptyState.isVisible = false
+        binding.recyclerDevices.isVisible = false
+    }
+
+    private fun showEmptyState() {
+        binding.loadingState.isVisible = false
+        binding.emptyState.isVisible = true
+        binding.recyclerDevices.isVisible = false
+    }
+
+    private fun showDeviceList() {
+        binding.loadingState.isVisible = false
+        binding.emptyState.isVisible = false
+        binding.recyclerDevices.isVisible = true
     }
 
     private fun connectTo(device: BluetoothDevice) {
-        binding.progressBar.visibility = View.VISIBLE
+        showLoading()
         BluetoothService.connect(device)
     }
 
@@ -84,17 +113,22 @@ class ConnectActivity : AppCompatActivity() {
             BluetoothService.state.collect { state ->
                 when (state) {
                     BluetoothService.State.CONNECTED -> {
-                        binding.progressBar.visibility = View.GONE
+                        showDeviceList()
                         Snackbar.make(binding.root, "Conectado!", Snackbar.LENGTH_SHORT).show()
                         finish()
                     }
+                    BluetoothService.State.CONNECTING -> {
+                        showLoading()
+                    }
                     BluetoothService.State.ERROR -> {
-                        binding.progressBar.visibility = View.GONE
+                        showDeviceList()
                         Snackbar.make(binding.root,
                             BluetoothService.lastError.value ?: "Erro de conexão",
                             Snackbar.LENGTH_LONG).show()
                     }
-                    else -> {}
+                    BluetoothService.State.DISCONNECTED -> {
+                        showDeviceList()
+                    }
                 }
             }
         }

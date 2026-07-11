@@ -11,41 +11,110 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="@color/colorSurface"
-        android:elevation="4dp" />
+        android:elevation="4dp">
 
-    <ProgressBar
-        android:id="@+id/progress_bar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="12dp"
-        android:visibility="gone"
-        android:indeterminateTint="@color/colorPrimary" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Conectar ao Rover"
+            android:textColor="@color/colorOnBackground"
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
-    <Button
-        android:id="@+id/btn_refresh"
+    </androidx.appcompat.widget.Toolbar>
+
+    <!-- Empty State -->
+    <LinearLayout
+        android:id="@+id/empty_state"
         android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:layout_margin="16dp"
-        android:text="Atualizar dispositivos pareados"
-        android:backgroundTint="@color/colorPrimary" />
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:padding="32dp"
+        android:visibility="gone">
 
-    <TextView
-        android:id="@+id/tv_empty"
+        <ImageView
+            android:layout_width="96dp"
+            android:layout_height="96dp"
+            android:src="@drawable/ic_bt_disconnected"
+            android:layout_marginBottom="24dp"
+            android:alpha="0.5" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nenhum dispositivo pareado"
+            android:textColor="@color/colorOnBackground"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="8dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Pareie o HC-05 nas configurações do Android"
+            android:textColor="@color/colorOnSurfaceVariant"
+            android:textSize="14sp"
+            android:gravity="center"
+            android:layout_marginBottom="24dp" />
+
+        <Button
+            android:id="@+id/btn_refresh_empty"
+            style="@style/PrimaryButton"
+            android:layout_width="200dp"
+            android:text="Atualizar" />
+
+    </LinearLayout>
+
+    <!-- Loading State -->
+    <LinearLayout
+        android:id="@+id/loading_state"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Nenhum dispositivo pareado.\nPareie o HC-05 nas configurações do Android."
-        android:textColor="@color/colorOnBackground"
-        android:textAlignment="center"
+        android:orientation="vertical"
+        android:gravity="center"
         android:padding="24dp"
-        android:visibility="gone" />
+        android:visibility="gone">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_devices"
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:indeterminateTint="@color/colorPrimary" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Buscando dispositivos..."
+            android:textColor="@color/colorOnSurfaceVariant"
+            android:textSize="14sp"
+            android:layout_marginTop="12dp" />
+
+    </LinearLayout>
+
+    <!-- Device List -->
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:clipToPadding="false"
-        android:padding="8dp" />
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <Button
+            android:id="@+id/btn_refresh"
+            style="@style/PrimaryButton"
+            android:layout_width="match_parent"
+            android:text="Atualizar dispositivos pareados" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_devices"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_marginTop="12dp"
+            android:clipToPadding="false" />
+
+    </LinearLayout>
 
 </LinearLayout>
