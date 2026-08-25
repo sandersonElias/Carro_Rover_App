@@ -209,4 +209,57 @@
 
     </LinearLayout>
 
+    <!-- Recording Bar -->
+    <LinearLayout
+        android:id="@+id/recording_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:background="@color/colorSurface"
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="8dp"
+        android:elevation="4dp">
+
+        <!-- Record Button -->
+        <Button
+            android:id="@+id/btn_record_exc"
+            style="@style/DangerButton"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_marginEnd="4dp"
+            android:text="⏺ Gravar" />
+
+        <!-- Play Button -->
+        <Button
+            android:id="@+id/btn_play_exc"
+            style="@style/PrimaryButton"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_marginHorizontal="4dp"
+            android:text="▶ Reproduzir"
+            android:enabled="false" />
+
+        <!-- Clear Button -->
+        <Button
+            android:id="@+id/btn_clear_exc"
+            style="@style/SecondaryButton"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_marginStart="4dp"
+            android:text="Limpar" />
+
+        <!-- Status Text -->
+        <TextView
+            android:id="@+id/tv_rec_status_exc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textColor="@color/colorError"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:layout_marginStart="12dp" />
+
+    </LinearLayout>
+
 </LinearLayout>

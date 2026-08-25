@@ -8,3 +8,14 @@
 .externalNativeBuild
 .cxx
 local.properties
+
+# App build outputs
+app/build/
+
+# AI assistant configs
+.mimocode/
+
+# APK files
+*.apk
+*.ap_
+*.aab

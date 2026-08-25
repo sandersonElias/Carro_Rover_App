@@ -10,7 +10,7 @@ import android.graphics.Shader
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
-import android.view.animation.OvershootInterpolator
+import android.view.animation.DecelerateInterpolator
 import kotlin.math.min
 import kotlin.math.sqrt
 
@@ -150,11 +150,11 @@ class JoystickView @JvmOverloads constructor(
     private fun animateSpringBack() {
         val startX = stickX
         val startY = stickY
-        val duration = 200L
+        val duration = 350L
 
         springAnimator = ValueAnimator.ofFloat(0f, 1f).apply {
             this.duration = duration
-            interpolator = OvershootInterpolator(2f)
+            interpolator = DecelerateInterpolator(2f)
             addUpdateListener { animation ->
                 val progress = animation.animatedValue as Float
                 stickX = startX + (centerX - startX) * progress

@@ -1,21 +1,21 @@
 /*
- * rover_uno.ino — Sketch Unificado (1x Arduino UNO)
+ * rover_uno.ino — Sketch Unificado (1x Arduino UNO) - Simplificado
  *
  * Pinos:
  *   0 (RX) ← HC-05 TXD      (Hardware Serial — desconecte antes de gravar!)
  *   1 (TX) → HC-05 RXD
  *   2      → L298N IN1       (motor esquerdo dir.)
- *   3  PWM → L298N ENA       (motor esquerdo vel.)  ← remover jumper
- *   4      → L298N IN2
- *   5  PWM → L298N ENB       (motor direito vel.)   ← remover jumper
- *   6      → L298N IN3       (motor direito dir.)
- *   7      → L298N IN4
- *   8      → Servo A1 Base
- *   9      → Servo A2 Ombro
- *  10      → Servo A3 Cotovelo
- *  11      → Servo A4 Pulso pitch
- *  12      → Servo A5 Pulso roll
- *  A0      → Servo A6 Garra
+ *   3      → L298N IN2       (motor esquerdo dir.)
+ *   4      → L298N IN3       (motor direito dir.)
+ *   5      → L298N IN4       (motor direito dir.)
+ *   6      → Servo A1 Base
+ *   7      → Servo A2 Ombro
+ *   8      → Servo A3 Cotovelo
+ *   9      → Servo A4 Pulso pitch
+ *  10      → Servo A5 Pulso roll
+ *  11      → Servo A6 Garra
+ *
+ * NOTA: ENA e ENB do L298N devem ter jumpers conectados (velocidade constante)
  *
  * Alimentação:
  *   Bateria 11.1V → L298N VMS + buck 5V
@@ -27,17 +27,15 @@
 
 #include <Servo.h>
 
-// ── L298N ──────────────────────────────────────────────────────────────────────
+// ── L298N (Simplificado - sem PWM) ────────────────────────────────────────────
 const uint8_t IN1 = 2;
-const uint8_t ENA = 3;   // PWM (Timer2 — não conflita com Servo/Timer1)
-const uint8_t IN2 = 4;
-const uint8_t ENB = 5;   // PWM (Timer0)
-const uint8_t IN3 = 6;
-const uint8_t IN4 = 7;
+const uint8_t IN2 = 3;
+const uint8_t IN3 = 4;
+const uint8_t IN4 = 5;
 
 // ── Servos ─────────────────────────────────────────────────────────────────────
 static const uint8_t NUM_SERVOS = 6;
-static const uint8_t SERVO_PINS[NUM_SERVOS]  = { 8, 9, 10, 11, 12, A0 };
+static const uint8_t SERVO_PINS[NUM_SERVOS]  = { 6, 7, 8, 9, 10, 11 };
 static const uint8_t SERVO_MIN[NUM_SERVOS]   = {  0,  30,  20,   0,   0,   0 };
 static const uint8_t SERVO_MAX[NUM_SERVOS]   = { 180, 150, 160, 180, 180, 180 };
 static const uint8_t SERVO_HOME[NUM_SERVOS]  = {  90,  90,  90,  90,  90,  90 };
@@ -61,13 +59,10 @@ uint16_t frameDelay  = FRAME_DELAY;
 bool     isRecording = false;
 bool     isPlaying   = false;
 
-// ── Estado dos motores ─────────────────────────────────────────────────────────
-int motorSpeed = 180;   // 0–255
-
 // ══════════════════════════════════════════════════════════════════════════════
 void setup() {
-  pinMode(IN1, OUTPUT); pinMode(IN2, OUTPUT); pinMode(ENA, OUTPUT);
-  pinMode(IN3, OUTPUT); pinMode(IN4, OUTPUT); pinMode(ENB, OUTPUT);
+  pinMode(IN1, OUTPUT); pinMode(IN2, OUTPUT);
+  pinMode(IN3, OUTPUT); pinMode(IN4, OUTPUT);
   stopMotors();
 
   for (uint8_t i = 0; i < NUM_SERVOS; i++) {
@@ -92,7 +87,6 @@ void loop() {
 // ── Roteador principal ─────────────────────────────────────────────────────────
 void processCommand(const String& cmd) {
   if      (cmd.startsWith("MOV:")) handleMovement(cmd.substring(4));
-  else if (cmd.startsWith("SPD:")) motorSpeed = constrain(cmd.substring(4).toInt(), 0, 255);
   else if (cmd.startsWith("SRV:")) handleServo(cmd.substring(4));
   else if (cmd.startsWith("ALL:")) handleAll(cmd.substring(4));
   else if (cmd.startsWith("BTN:")) handleButton(cmd.substring(4));
@@ -100,16 +94,16 @@ void processCommand(const String& cmd) {
   else if (cmd.startsWith("SET:")) handleSettings(cmd.substring(4));
 }
 
-// ── Motores ────────────────────────────────────────────────────────────────────
+// ── Motores (Simplificado - velocidade constante) ─────────────────────────────
 void handleMovement(const String& action) {
-  if      (action == "F")  { setLeftMotor(motorSpeed, true);  setRightMotor(motorSpeed, true);  }
-  else if (action == "B")  { setLeftMotor(motorSpeed, false); setRightMotor(motorSpeed, false); }
-  else if (action == "L")  { setLeftMotor(motorSpeed, false); setRightMotor(motorSpeed, true);  }
-  else if (action == "R")  { setLeftMotor(motorSpeed, true);  setRightMotor(motorSpeed, false); }
-  else if (action == "FL") { setLeftMotor(motorSpeed / 2, true);  setRightMotor(motorSpeed, true);  }
-  else if (action == "FR") { setLeftMotor(motorSpeed, true);  setRightMotor(motorSpeed / 2, true);  }
-  else if (action == "BL") { setLeftMotor(motorSpeed / 2, false); setRightMotor(motorSpeed, false); }
-  else if (action == "BR") { setLeftMotor(motorSpeed, false); setRightMotor(motorSpeed / 2, false); }
+  if      (action == "F")  driveForward();
+  else if (action == "B")  driveBackward();
+  else if (action == "L")  pivotLeft();
+  else if (action == "R")  pivotRight();
+  else if (action == "FL") curveLeft();
+  else if (action == "FR") curveRight();
+  else if (action == "BL") curveBackLeft();
+  else if (action == "BR") curveBackRight();
   else if (action == "S")  stopMotors();
   else if (action.startsWith("JOY:")) handleJoystick(action.substring(4));
 }
@@ -120,25 +114,43 @@ void handleJoystick(const String& params) {
   if (sep < 0) return;
   int leftVal  = params.substring(0, sep).toInt();
   int rightVal = params.substring(sep + 1).toInt();
-  setLeftMotor(abs(leftVal),  leftVal  >= 0);
-  setRightMotor(abs(rightVal), rightVal >= 0);
+  
+  // Direção baseada no sinal (velocidade constante quando ativo)
+  bool leftFwd  = leftVal >= 0;
+  bool rightFwd = rightVal >= 0;
+  
+  // Só move se o valor absoluto for significativo (>30 para evitar ruído)
+  if (abs(leftVal) > 30)  setLeftMotor(true, leftFwd);
+  else                    setLeftMotor(false, true);
+  
+  if (abs(rightVal) > 30) setRightMotor(true, rightFwd);
+  else                    setRightMotor(false, true);
 }
+
+void driveForward()  { setLeftMotor(true, true);  setRightMotor(true, true);  }
+void driveBackward() { setLeftMotor(true, false); setRightMotor(true, false); }
+void pivotLeft()     { setLeftMotor(true, false); setRightMotor(true, true);  }
+void pivotRight()    { setLeftMotor(true, true);  setRightMotor(true, false); }
+void curveLeft()     { setLeftMotor(false, true); setRightMotor(true, true);  }
+void curveRight()    { setLeftMotor(true, true);  setRightMotor(false, true); }
+void curveBackLeft() { setLeftMotor(false, false); setRightMotor(true, false); }
+void curveBackRight(){ setLeftMotor(true, false); setRightMotor(false, false); }
 
 void stopMotors() {
-  setLeftMotor(0, true);
-  setRightMotor(0, true);
+  setLeftMotor(false, true);
+  setRightMotor(false, true);
 }
 
-void setLeftMotor(int spd, bool fwd) {
-  digitalWrite(IN1, fwd ? HIGH : LOW);
-  digitalWrite(IN2, fwd ? LOW  : HIGH);
-  analogWrite(ENA, constrain(spd, 0, 255));
+// enable: true = motor ligado, false = motor desligado
+// fwd: true = frente, false = ré
+void setLeftMotor(bool enable, bool fwd) {
+  digitalWrite(IN1, enable ? (fwd ? HIGH : LOW) : LOW);
+  digitalWrite(IN2, enable ? (fwd ? LOW  : HIGH) : LOW);
 }
 
-void setRightMotor(int spd, bool fwd) {
-  digitalWrite(IN3, fwd ? HIGH : LOW);
-  digitalWrite(IN4, fwd ? LOW  : HIGH);
-  analogWrite(ENB, constrain(spd, 0, 255));
+void setRightMotor(bool enable, bool fwd) {
+  digitalWrite(IN3, enable ? (fwd ? HIGH : LOW) : LOW);
+  digitalWrite(IN4, enable ? (fwd ? LOW  : HIGH) : LOW);
 }
 
 // ── Servos ─────────────────────────────────────────────────────────────────────
