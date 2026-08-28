@@ -200,8 +200,6 @@ O desenvolvimento seguiu a metodologia ágil Scrum, com ciclos de duas semanas (
 
 O sistema é composto por três camadas principais:
 
-![Diagrama de Blocos do Sistema](images/fig1-diagrama-blocos.png)
-
 ---
 
 ## 4. DESENVOLVIMENTO
@@ -239,7 +237,17 @@ A alimentação do sistema é composta por:
 
 **Figura 5 - Circuito de Alimentação**
 
-![Circuito de Alimentacao](images/fig4-alimentacao.png)
+```
+Baterias 18650 (3S ~11.1V)
+    │
+    ├── L298N (12V IN)
+    │   ├── OUT1/OUT2 → Motores Esquerdos
+    │   ├── OUT3/OUT4 → Motores Direitos
+    │   └── 5V OUT → Arduino VIN
+    │
+    └── LM2596 (IN)
+        └── 5V OUT → Servos MG996R (6x)
+```
 
 > ⚠️ **Nota Importante**: O pino RX do HC-05 opera em 3.3V. É necessário utilizar um divisor de tensão com resistores 1kΩ e 2kΩ para evitar danos ao módulo.
 
@@ -260,8 +268,6 @@ O firmware foi desenvolvido em C++ utilizando a biblioteca padrão `Servo.h`. O 
 #### 4.3.1. Arquitetura MVVM
 
 O aplicativo utiliza a arquitetura MVVM (Model-View-ViewModel), separando a lógica de negócio da apresentação:
-
-![Arquitetura MVVM do Aplicativo](images/fig2-arquitetura-mvvm.png)
 
 - **Model**: BluetoothService (singleton), ArmViewModel
 - **View**: Fragments e Activities com ViewBinding
@@ -298,8 +304,6 @@ A interface foi projetada para uso em modo paisagem, otimizando o espaço dispon
 
 ### 4.4. Protocolo de Comunicação
 
-![Fluxo de Comunicacao Bluetooth](images/fig3-fluxo-bluetooth.png)
-
 #### 4.4.1. Formato dos Comandos
 
 Todos os comandos seguem o formato textual terminado com newline (`\n`):
@@ -334,8 +338,6 @@ turn = x
 left = forward - turn
 right = forward + turn
 ```
-
-![Fluxograma do Protocolo de Comunicacao](images/fig5-fluxo-protocolo.png)
 
 ---
 
