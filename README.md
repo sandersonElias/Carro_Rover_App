@@ -7,6 +7,8 @@
 
 Aplicativo Android para controle remoto de rover robótico via Bluetooth Classic (HC-05).
 
+![Rover Control](docs/images/rover-foto.png)
+
 ## Sumário
 
 - [Visão Geral](#visão-geral)
@@ -225,6 +227,10 @@ Todos os comandos são strings terminadas com `\n` (newline).
 | 11 (PWM) | Servo A6 | Garra |
 
 > ⚠️ **Atenção**: Use divisor de tensão no pino RX do HC-05 (1kΩ + 2kΩ)
+
+### Diagrama de Pinagem
+
+![Diagrama de Pinagem](docs/images/pinagem-diagrama.png)
 
 ### Diagrama de Alimentação
 

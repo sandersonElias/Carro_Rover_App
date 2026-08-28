@@ -1,5 +1,7 @@
 # Pinagem e Conexões do Rover (1x Arduino UNO)
 
+![Diagrama de Pinagem](../docs/images/pinagem-diagrama.png)
+
 ## Arduino UNO (rover_uno.ino)
 
 | Pino Arduino | Conectado em   | Função                      |
